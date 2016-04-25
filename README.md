@@ -6,9 +6,9 @@ using a simple programming model.
 
 It is designed to scale up from single servers to thousands of machines,
 each offering local computation and storage. Rather than rely on hardware
-to deliver high-avaiability, the library itself is designed to detect
+to deliver high-availability, the library itself is designed to detect
 and handle failures at the application layer, so delivering a
-highly-availabile service on top of a cluster of computers, each of
+highly-available service on top of a cluster of computers, each of
 which may be prone to failures.
 
 This bundle provides a complete deployment of the core components of the
@@ -20,7 +20,16 @@ include:
   * ResourceManager (Yarn)
   * Slaves (DataNode and NodeManager)
   * Client (example and node for manually running jobs from)
-    - Plugin (colocated on the Client)
+    - Plugin (collocated on the Client)
+
+In addition to the Apache Hadoop this bundle includes monitoring
+facilities through the following components:
+
+  * Kibana
+  * Elasticsearch
+  * Topbeat
+  * Filebeat
+  * Ganglia
 
 Deploying this bundle gives you a fully configured and connected Apache Hadoop
 cluster on any supported cloud, which can be easily scaled to meet workload
@@ -71,6 +80,27 @@ as expected.  You can get more information about that component's smoke test:
 
     juju action fetch <action-id>
 
+Monitoring the Apache Hadoop infrastructure is available through two separate
+systems that work in tandem to provide a full view of the deployed infrastructure.
+Ganglia offers insight of the Apache Hadoop operations. The Ganglia web interface
+is available at http://<ganglia-host>/ganglia
+
+Full text search and analysis of Hadoop logs is available through Kibana.
+By navigating to http://<kibana-host>/ you can setup your own 
+(application specific) dashboards and perform any log analysis you please.
+Note that you first need to submit at least one Hadoop job so that
+the ELK stack (Elasticsearch-Kibana-Logstack) becomes aware of the format of the
+logs to be processed. 
+
+    juju action do resourcemanager/0 smoke-test
+    juju action do namenode/0 testdfsio
+
+As soon as the above jobs have run you can request from Kibana to build indexes based
+on the patterns observed (under settings -> indices).
+By specifying "*" as a pattern you will be indexing all produced logs.
+
+Please refer to the Ganglia and Kibana manuals to fine-tune your infrastructure's
+monitoring.
 
 ## Deploying in Network-Restricted Environments
 
@@ -118,6 +148,8 @@ directory and serve them all with a single `juju-resources serve` instance.
 - [Apache Hadoop bug tracker](http://hadoop.apache.org/issue_tracking.html)
 - [Apache Hadoop mailing lists](http://hadoop.apache.org/mailing_lists.html)
 - [Apache Hadoop charms](http://jujucharms.com/?text=apache-hadoop)
+- [Kibana](https://www.elastic.co/products/kibana) home page
+- [Ganglia](http://ganglia.info/) home page
 - [Bundle issue tracker](https://github.com/juju-solutions/bundle-apache-processing-mapreduce/issues)
 - [Juju mailing list](https://lists.ubuntu.com/mailman/listinfo/juju)
 - [Juju community](https://jujucharms.com/community)

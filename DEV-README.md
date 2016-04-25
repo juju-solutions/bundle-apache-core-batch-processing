@@ -1,14 +1,15 @@
 # Overview
 
 This bundle provides a complete deployment of the core components of the Apache
-Hadoop platform.  This document describes how the components of this deployment
+Hadoop platform along with its monitoring facilities.
+This document describes how the components of this deployment
 are connected and how to connect additional services to the deployment to add
 functionality.
 
 
 # Building on this Bundle
 
-This bundle supports two ways to extend its functionality via additonal charms:
+This bundle supports two ways to extend its functionality via additional charms:
 by relating to the subordinate `apache-hadoop-plugin` charm, or by using a
 stand-alone charm connecting to HDFS and YARN via standard relations.
 
@@ -56,7 +57,8 @@ this bundle, you would use:
 
 # Component Services
 
-This bundle deploys five services on a total of seven units
+This bundle deploys five services on a total of seven units for Apache Hadoop,
+and five more services for monitoring purposes.
 (for detailed information, including relation specifications,
 see each charm's DEV-README.md):
 
@@ -74,3 +76,20 @@ see each charm's DEV-README.md):
 
 * [**client**](https://jujucharms.com/apache-hadoop-client)
   This service provides an endpoint from which to run jobs, whether manually or via connected services.
+
+* [**ganglia**](https://jujucharms.com/ganglia)
+  This Ganglia charm that add infrastructure monitoring.
+
+* [**filebeat**](https://jujucharms.com/u/containers/filebeat/trusty)
+  This subordinate charm collects log files from the slaves, namenode and resource manages and ships
+  them to elasticsearch.
+
+* [**topbeat**](https://jujucharms.com/u/containers/topbeat/trusty)
+  This subordinate charm collects load information from the slaves ships it
+  elasticsearch.
+
+* [**elasticsearch**](https://jujucharms.com/elasticsearch)
+  This service provides an full text search on the infrastructure's log information.
+
+* [**kibana**](https://jujucharms.com/u/containers/kibana/trusty)
+  This service provides Kibana that is the web interface for elasticsearch.
