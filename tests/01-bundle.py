@@ -20,7 +20,7 @@ class TestBundle(unittest.TestCase):
         bundle = yaml.safe_load(bun)
         cls.d.load(bundle)
         cls.d.setup(timeout=1800)
-        cls.d.sentry.wait_for_messages({'plugin': 'Ready (HDFS & YARN)'}, timeout=1800)
+        cls.d.sentry.wait_for_messages({'plugin': 'Ready (DataNode & NodeManager)'}, timeout=1800)
         cls.hdfs = cls.d.sentry['namenode'][0]
         cls.yarn = cls.d.sentry['resourcemanager'][0]
         cls.slave = cls.d.sentry['slave'][0]
@@ -56,7 +56,7 @@ class TestBundle(unittest.TestCase):
         assert 'NodeManager' not in hdfs, "NodeManager should not be running on namenode"
         assert 'NodeManager' not in client, "NodeManager should not be running on client"
 
-        assert 'DataNode' in slave, "DataServer not started"
+        assert 'DataNode' in slave, "DataNode not started"
         assert 'DataNode' not in yarn, "DataNode should not be running on resourcemanager"
         assert 'DataNode' not in hdfs, "DataNode should not be running on namenode"
         assert 'DataNode' not in client, "DataNode should not be running on client"
