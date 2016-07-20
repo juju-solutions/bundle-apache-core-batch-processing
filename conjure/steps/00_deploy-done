@@ -8,6 +8,8 @@ sys.path.insert(0, '/usr/share/conjure-up/hooklib')
 import juju  # noqa
 from writer import log, success, fail, error  # noqa
 
+NUM_AGENTS = 13
+
 
 def main():
     log.debug("Running deploy-done for Apache MapReduce installation.")
@@ -27,13 +29,15 @@ def main():
         error("Machine creation errors:\n{}".format(errs))
 
     # 13 total agents for this spell
-    if len(agent_states) < 13:
-        fail('Applications are still deploying')
+    if len(agent_states) < NUM_AGENTS:
+        fail('{} applications are still deploying'.format(
+            NUM_AGENTS - len(agent_states)))
 
     # Ganglia does not use the normal status-set 'active' so we skip their
     # workload status when checking all agent states.
-    if all([state == 'active' for _, state, _ in agent_states
-            if state != 'unknown']):
+    active_states = [state == 'active' for _, state, _ in agent_states
+                     if state != 'unknown']
+    if len(active_states) > 0 and all(active_states):
         success('Applications are ready')
 
     fail('Applications not ready yet')
