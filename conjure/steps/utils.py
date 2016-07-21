@@ -35,6 +35,9 @@ def run_smoke_test(service):
         if output['status'] == 'running' or output['status'] == 'pending':
             time.sleep(5)
             continue
+        if output['status'] == 'failed':
+            fail("The smoke-test failed, "
+                 "please have a look at `juju show-action-status`")
         if output['status'] == 'completed':
             completed_msg = "{} smoke-test passed".format(service)
             results = output.get('results', None)
