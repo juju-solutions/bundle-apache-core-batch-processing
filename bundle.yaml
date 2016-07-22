@@ -102,3 +102,9 @@ relations:
   - [ganglia-node, slave]
   - [ganglia-node, flume-syslog]
   - [ganglia-node, flume-hdfs]
+description: |
+  MapReduce is a software framework for easily writing applications which process vast amounts of data in-parallel on large clusters of machines.
+tags:
+  - conjure-up-bigdata
+  - conjure-up-hadoop
+  - conjure-up-mapreduce
