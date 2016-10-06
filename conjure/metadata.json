@@ -1,9 +1,0 @@
-{
-    "friendly-name": "Apache Hadoop MapReduce",
-    "version": 1,
-    "options-whitelist": {
-        "namenode": ["ganglia_metrics"],
-        "resourcemanager": ["ganglia_metrics"],
-        "slave": ["ganglia_metrics"]
-    }
-}

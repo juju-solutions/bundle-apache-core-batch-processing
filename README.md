@@ -50,6 +50,18 @@ the other services. To scale the cluster, use:
 This will add two additional slave nodes, for a total of five.
 
 
+### Conjure Up
+
+`conjure-up` is an interactive, terminal UI deployment tool for Juju bundles.
+
+After installing conjure-up, you can deploy the canonical-kubernetes bundle and
+tweak config values with one command:
+
+    sudo apt install conjure-up
+    conjure-up apache-processing-mapreduce
+
+Refer to the [conjure-up documentation](http://conjure-up.io) to learn more.
+
 ### Verify the deployment
 
 The services provide extended status reporting to indicate when they are ready:
