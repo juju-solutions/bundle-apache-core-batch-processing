@@ -82,11 +82,21 @@ action status list:
     juju action do resourcemanager/0 smoke-test
     watch -n 0.5 juju action status
 
+For Juju 2.0 you'll need to run:
+
+    juju run-action namenode/0 smoke-test
+    juju run-action resourcemanager/0 smoke-test
+    watch -n 0.5 juju show-action-status
+
 Eventually, all of the actions should settle to `status: completed`.  If
 any go instead to `status: failed` then it means that component is not working
 as expected.  You can get more information about that component's smoke test:
 
     juju action fetch <action-id>
+
+For Juju 2.0 you'll need to run:
+
+    juju show-action-output <action-id>
 
 Monitoring is provided by the Ganglia, which is available at
 `http://<ganglia-host>/ganglia` where `<ganglia-host>` can be discovered from
